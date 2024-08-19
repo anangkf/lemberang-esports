@@ -7,6 +7,9 @@
     <title>Register - Mazer Admin Dashboard</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/app.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/app-dark.css'); ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" crossorigin="anonymous">
     <style>
         body {
             background-color: var(--bs-body-bg);
@@ -79,27 +82,43 @@
                     <h1>Buat Akun</h1>
                     <p class="auth-subtitle mb-5">Daftarkan akun anda sekarang</p>
 
-                    <form action="">
+                    <?php if (session('error') !== null) : ?>
+                        <div class="alert alert-danger" role="alert"><?= session('error') ?></div>
+                    <?php elseif (session('errors') !== null) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php if (is_array(session('errors'))) : ?>
+                                <?php foreach (session('errors') as $error) : ?>
+                                    <?= $error ?>
+                                    <br>
+                                <?php endforeach ?>
+                            <?php else : ?>
+                                <?= session('errors') ?>
+                            <?php endif ?>
+                        </div>
+                    <?php endif ?>
+
+                    <form action="register" method="post">
+                        <?= csrf_field() ?>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Email">
+                            <input type="text" class="form-control form-control-xl" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-envelope"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Username">
+                            <input type="text" class="form-control form-control-xl" name="username" inputmode="text" autocomplete="username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Password">
+                            <input type="password" class="form-control form-control-xl" name="password" inputmode="text" autocomplete="new-password" placeholder="<?= lang('Auth.password') ?>" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Confirm Password">
+                            <input type="password" class="form-control form-control-xl" name="password_confirm" inputmode="text" autocomplete="new-password" placeholder="<?= lang('Auth.passwordConfirm') ?>" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
@@ -109,7 +128,7 @@
                     </form>
                     <div class="text-center mt-5 fs-5">
                         <p class='text-gray-600'>
-                            Sudah punya akun? <a href="#" class="font-bold">Login</a>
+                            Sudah punya akun? <a href="<?= base_url('/login') ?>" class="font-bold">Login</a>
                         </p>
                     </div>
                 </div>

@@ -86,15 +86,35 @@
                     <h1>Aplikasi {Nama}</h1>
                     <p class="auth-subtitle mb-3">Login dengan akun anda</p>
 
-                    <form action="#">
+                    <?php if (session('error') !== null) : ?>
+                        <div class="alert alert-danger" role="alert"><?= session('error') ?></div>
+                    <?php elseif (session('errors') !== null) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php if (is_array(session('errors'))) : ?>
+                                <?php foreach (session('errors') as $error) : ?>
+                                    <?= $error ?>
+                                    <br>
+                                <?php endforeach ?>
+                            <?php else : ?>
+                                <?= session('errors') ?>
+                            <?php endif ?>
+                        </div>
+                    <?php endif ?>
+
+                    <?php if (session('message') !== null) : ?>
+                    <div class="alert alert-success" role="alert"><?= session('message') ?></div>
+                    <?php endif ?>
+
+                    <form action="login" method="post">
+                        <?= csrf_field() ?>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Username">
+                            <input type="email" class="form-control form-control-xl" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Password">
+                            <input type="password" class="form-control form-control-xl" name="password" inputmode="text" autocomplete="current-password" placeholder="<?= lang('Auth.password') ?>" required>
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>
@@ -103,7 +123,7 @@
                     </form>
                     <hr>
                     <div class="text-center fs-5 mt-5">
-                        <p>Lupa password? <a href="#" class="font-bold">Klik disini</a></p>
+                      <p>Belum punya akun? <a href="<?= base_url('/register') ?>" class="font-bold">Daftar</a> atau <a href="<?= base_url('/login/magic-link') ?>" class="font-bold">Lupa Password</a></p>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Hello</h4>
-        <p class="card-text">I'm the content</p>
+        <p class="card-text">I'm the <?= array_values($roles)[0]; ?></p>
     </div>
 </div>
 <?= $this->endSection(); ?>
