@@ -1,4 +1,4 @@
-<?= $this->extend('templates/base'); ?>
+<?= $this->extend('templates/admin/base'); ?>
 <?= $this->section('content'); ?>
 <div class="card">
     <div class="card-body">
