@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function ($routes) {
   $routes->resource('dashboard', ['controller' => 'Dashboard']);
+  $routes->resource('kategori', ['controller' => 'Kategori']);
 });
 // $routes->get('/dashboard', 'Dashboard::index');
 

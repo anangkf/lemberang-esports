@@ -19,8 +19,8 @@
 <body>
     <div id="app">
       <div class="p-4 px-md-5">
-        <?= $this->include('templates/header'); ?>
-        
+        <?= $this->include('templates/header', $categories); ?>
+
         <div class="d-flex flex-column flex-lg-row gap-4 md-gap-0">
           <?= $this->renderSection('content'); ?>
           

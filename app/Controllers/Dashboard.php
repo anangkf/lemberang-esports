@@ -13,6 +13,7 @@ class Dashboard extends BaseController
 
         $data['roles'] = $user->getGroups();
         $data['user'] = $user;
+        $data['title'] = 'Dashboard';
         
         if (!is_array($data['roles']) || empty($data['roles'])) {
           $data['roles'] = []; // Atur sebagai array kosong jika tidak ada role

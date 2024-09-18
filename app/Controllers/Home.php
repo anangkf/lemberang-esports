@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\KategoriModel;
+
 class Home extends BaseController
 {
     public function index(): string
@@ -138,6 +140,8 @@ class Home extends BaseController
           ],
         ];
 
+        $kategoriModel = new KategoriModel();
+        $data['categories'] = $kategoriModel->findAll();
 
         return view('pages/home', $data);
     }

@@ -3,9 +3,10 @@
       <a href="">Logo</a>
       <div class="d-none d-xl-flex gap-4">
         <a href="" class="px-2">Home</a>
-        <a href="" class="px-2">Mobile Legends</a>
-        <a href="" class="px-2">PUBGM</a>
-        <a href="" class="px-2">eFootball</a>
+        <?php foreach ($categories as $category) : ?>
+          <a href="<?= base_url('news/category/' . $category['slug']) ?>" class="px-2"><?= $category['name']; ?></a>
+        <?php endforeach; ?>
+
       </div>
       <div class="d-none d-xl-flex gap-3 align-items-center">
         <form action="">

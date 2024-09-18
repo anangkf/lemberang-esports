@@ -5,7 +5,7 @@
                 <i class="bi bi-justify fs-3"></i>
             </a>
         </header>
-        <h3 class="text-center">Title of the page</h3>
+        <h3 class="text-center"><?= $title ?></h3>
         <div class="dropdown">
             <span class="text-end me-3 d-none d-xl-inline"><?= $user->email; ?></span>
             <img src="https://picsum.photos/200" data-bs-toggle="dropdown" class="dropdown-toggle img-fluid rounded-circle" style="cursor:pointer;" width="50" alt="image" data-bs-auto-close="outside">
