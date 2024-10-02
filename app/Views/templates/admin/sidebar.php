@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <a href="<?= base_url(); ?>">
-                    <img class="img-fluid rounded-3" style="width: max-content;height: max-content;" src="<?= base_url('assets/img/logo/logo.png'); ?>" alt="Logo" loading="lazy">
+                    <img class="img-fluid rounded-3" style="width: max-content;height: max-content;" src="<?= base_url('assets/img/logo/lemberang-esports-row.png'); ?>" alt="Logo" loading="lazy">
                 </a>
                 <div class="sidebar-toggler x">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -26,10 +26,10 @@
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item active">
-                            <a href="#" class="submenu-link">List Berita</a>
+                            <a href="<?= base_url('admin/berita') ?>" class="submenu-link">List Berita</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Berita</a>
+                            <a href="<?= base_url('admin/berita/new') ?>" class="submenu-link">Tambah Berita</a>
                         </li>
                         <li class="submenu-item">
                             <a href="#" class="submenu-link">Edit Banner Carousel</a>

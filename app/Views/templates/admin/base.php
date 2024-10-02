@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <!-- load ckeditor style from cdn -->
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.1.1/ckeditor5.css" />
     <script src="<?= base_url('assets/js/init-theme.js'); ?>"></script>
     <!-- Global extensions CSS applied here -->
 </head>
@@ -59,6 +61,8 @@
 
     <!-- Global extensions JS applied here -->
     <script src="<?= base_url('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js'); ?>"></script>
+    <!-- load ckeditor script from cdn -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/43.1.1/ckeditor5.umd.js"></script>
 
     <?= $this->renderSection('page-script'); ?>
 </body>

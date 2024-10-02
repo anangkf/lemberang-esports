@@ -78,7 +78,11 @@
         <div class="row h-100">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
-                    <img class="w-auto h-auto mb-5" src="<?= base_url('assets/img/logo/logo.png'); ?>" alt="Logo" loading="lazy">
+                    <div class="mb-5 text-center">
+                        <a href="<?= base_url("") ?>">
+                            <img class="w-75" src="<?= base_url('assets/img/logo/lemberang-esports-row.png'); ?>" alt="Logo" loading="lazy">
+                        </a>
+                    </div>
                     <h1>Buat Akun</h1>
                     <p class="auth-subtitle mb-5">Daftarkan akun anda sekarang</p>
 

@@ -1,6 +1,8 @@
 <div class="page-heading">
     <div class="d-flex justify-content-between align-items-center">
-      <a href="">Logo</a>
+      <a href="<?= base_url(); ?>">
+          <img class="img-fluid rounded-3" style="width: 180px;height: max-content;" src="<?= base_url('assets/img/logo/lemberang-esports-row.png'); ?>" alt="Logo" loading="lazy">
+      </a>
       <div class="d-none d-xl-flex gap-4">
         <a href="" class="px-2">Home</a>
         <?php foreach ($categories as $category) : ?>
