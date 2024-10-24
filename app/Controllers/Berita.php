@@ -44,6 +44,36 @@ class Berita extends BaseController
         return view('pages/admin/berita/list', $data);
     }
 
+    public function list()
+    {
+        $data['user'] = auth()->user();
+        $data['roles'] = auth()->user()->getGroups();
+        $data['isLoggedIn'] = $this->isLoggedIn;
+        $data['tournaments'] = $this->tournaments;
+        $data['popular_news'] = $this->popular_news;
+        $data['categories'] = $this->kategoriModel->findAll();
+
+        $data['news'] = $this->beritaModel->getBeritaWithRelation(9999);
+
+        return view('pages/berita/list', $data);
+    }
+
+    public function listByCategory($slug)
+    {
+        $kategori = $this->kategoriModel->where(['slug' => $slug])->first();
+        $data['user'] = auth()->user();
+        $data['roles'] = auth()->user()->getGroups();
+        $data['isLoggedIn'] = $this->isLoggedIn;
+        $data['tournaments'] = $this->tournaments;
+        $data['popular_news'] = $this->popular_news;
+        $data['categories'] = $this->kategoriModel->findAll();
+        $data['title'] = $kategori['name'];
+
+        $data['news'] = $this->beritaModel->getBeritaByCategory($kategori['id'], 9999);
+
+        return view('pages/berita/kategori', $data);
+    }
+
     public function new()
     {   
         $data['user'] = auth()->user();

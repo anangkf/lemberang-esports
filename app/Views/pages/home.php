@@ -13,7 +13,7 @@
             <?= view_cell('RecentNewsItemCell', ['news' => $news]) ?>
           <?php endforeach; ?>
         </div>
-        <a href="#" class="link-waring position-absolute end-0">Lihat semua<i class="bi bi-arrow-right" ></i></a>
+        <a href="<?= base_url('berita/all') ?>" class="link-waring position-absolute end-0">Lihat semua<i class="bi bi-arrow-right" ></i></a>
       </div>
     </div>
   </div>

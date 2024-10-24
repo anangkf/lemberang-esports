@@ -34,6 +34,16 @@ class BeritaModel extends Model
                     ->findAll($limit);
     }
 
+    public function getBeritaByCategory($kategoriId, $limit = 3)
+    {
+        return $this->select('berita.*, kategori.name as kategori_name, users.username as author_name')
+                    ->join('kategori', 'kategori.id = berita.kategori_id')
+                    ->join('users', 'users.id = berita.author_id')
+                    ->where('berita.kategori_id', $kategoriId)
+                    ->orderBy('created_at', 'DESC')
+                    ->findAll($limit);
+    }
+
     // Dates
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';

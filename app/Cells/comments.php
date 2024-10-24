@@ -26,7 +26,7 @@
       <form method="post" action="<?= base_url('berita/' . $beritaId . '/comment') ?>" class="<?= $isLoggedIn ? 'd-block' : 'd-none' . 'w-100' ?>">
           <div class="form-group">
               <label for="text">Komentar</label>
-              <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+              <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Kirim</button>
       </form>
