@@ -20,6 +20,33 @@
     <div id="app">
       <div class="p-4 px-md-5">
         <?= $this->include('templates/header', $categories); ?>
+        
+        <?php if (session('error') !== null) : ?>
+            <div class="position-absolute alert alert-danger alert-dismissible fade show"" role="alert" style="right: 12px;">
+              <?= session('error') ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php elseif (session('errors') !== null) : ?>
+            <div class="position-absolute alert alert-danger alert-dismissible fade show"" role="alert" style="right: 12px;">
+                <?php if (is_array(session('errors'))) : ?>
+                    <?php foreach (session('errors') as $error) : ?>
+                        <?= $error ?>
+                        <br>
+                    <?php endforeach ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <?php else : ?>
+                    <?= session('errors') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <?php endif ?>
+            </div>
+        <?php endif ?>
+
+        <?php if (session('message') !== null) : ?>
+          <div class="position-absolute alert alert-success alert-dismissible fade show"" role="alert" style="right: 12px;">
+            <?= session('message') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <?php endif ?>
 
         <div class="d-flex flex-column flex-lg-row gap-4 md-gap-0">
           <?= $this->renderSection('content'); ?>

@@ -6,5 +6,9 @@ use CodeIgniter\View\Cells\Cell;
 
 class CarouselCell extends Cell
 {
-    public $items;
+    public function render(): string
+    {
+        $data['news'] = model('BeritaModel')->orderBy('created_at', 'DESC')->findAll(3);
+        return $this->view('carousel', $data);
+    }
 }

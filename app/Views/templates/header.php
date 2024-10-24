@@ -4,7 +4,7 @@
           <img class="img-fluid rounded-3" style="width: 180px;height: max-content;" src="<?= base_url('assets/img/logo/lemberang-esports-row.png'); ?>" alt="Logo" loading="lazy">
       </a>
       <div class="d-none d-xl-flex gap-4">
-        <a href="" class="px-2">Home</a>
+        <a href="<?= base_url(); ?>" class="px-2">Home</a>
         <?php foreach ($categories as $category) : ?>
           <a href="<?= base_url('news/category/' . $category['slug']) ?>" class="px-2"><?= $category['name']; ?></a>
         <?php endforeach; ?>

@@ -13,6 +13,10 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
   $routes->get('berita/(:num)/preview', 'Berita::preview/$1');
   $routes->resource('berita', ['controller' => 'Berita']);
 });
+$routes->patch('berita/(:num)/like', 'Berita::like/$1');
+$routes->delete('berita/(:num)/like', 'Berita::dislike/$1');
+$routes->post('berita/(:num)/comment', 'Berita::comment/$1');
+$routes->get('berita/(:segment)', 'Berita::show/$1');
 // $routes->get('/dashboard', 'Dashboard::index');
 
 service('auth')->routes($routes);

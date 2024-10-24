@@ -14,13 +14,24 @@ class BeritaModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = ['title', 'slug', 'description', 'picture', 'content', 'kategori_id', 'author_id', ];
 
-    public function getBeritaWithRelation()
+    public function getBeritaWithRelation($limit = 3)
     {
         return $this->select('berita.*, kategori.name as kategori_name, users.username as author_name')
                     ->join('kategori', 'kategori.id = berita.kategori_id')
                     ->join('users', 'users.id = berita.author_id')
                     ->orderBy('created_at', 'DESC')
-                    ->findAll();
+                    ->findAll($limit);
+    }
+
+    public function getBeritaPopularWithRelation($limit = 3)
+    {
+        return $this->select('berita.*, kategori.name as kategori_name, users.username as author_name, COUNT(likes.id) as likes_count')
+                    ->join('kategori', 'kategori.id = berita.kategori_id')
+                    ->join('users', 'users.id = berita.author_id')
+                    ->join('likes', 'likes.beritaId = berita.id', 'left')
+                    ->groupBy('berita.id')
+                    ->orderBy('likes_count', 'DESC')
+                    ->findAll($limit);
     }
 
     // Dates

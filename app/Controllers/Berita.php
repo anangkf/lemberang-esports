@@ -4,17 +4,33 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\BeritaModel;
+use App\Models\CommentModel;
 use App\Models\KategoriModel;
+use App\Models\LikeModel;
 
 class Berita extends BaseController
 {
     protected $kategoriModel;
     protected $beritaModel;
+    private $isLoggedIn;
+    private $popular_news;
+    private $tournaments;
+    private $likeModel;
+    private $commentModel;
 
     public function __construct()
     {
         $this->beritaModel = new BeritaModel();
         $this->kategoriModel = new KategoriModel();
+        $this->isLoggedIn = auth()->loggedIn();
+        $this->popular_news = $this->beritaModel->getBeritaPopularWithRelation(5);
+        $this->tournaments = [
+          ["id" => 1, "name" => "League of Legends World Championship", "image" => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIe9oqSqALyMSr3kMBA4lJJlnOz4wJBpnKNw&s", "start_date" => "October 10, 2024"],
+          ["id" => 2, "name" => "Dota 2 The International", "image" => "https://www.blibli.com/friends-backend/wp-content/uploads/2023/12/B1100936-Cover-Juara-The-International-DOTA-2-1536x806.jpg", "start_date" => "August 15, 2024"],
+          ["id" => 3, "name" => "CS:GO Major Championship", "image" => "https://res.cloudinary.com/pley-gg/image/upload/c_fill,w_900/v1/teams/astralis/Copyright_-_Bart-Oerbekke_-_astralis4_rgezkp", "start_date" => "November 1, 2024"],
+        ];
+        $this->likeModel = new LikeModel();
+        $this->commentModel = new CommentModel();
     }
 
     public function index()
@@ -23,7 +39,7 @@ class Berita extends BaseController
         $data['roles'] = auth()->user()->getGroups();
         $data['title'] = 'List Berita';
 
-        $data['berita'] = $this->beritaModel->getBeritaWithRelation();
+        $data['berita'] = $this->beritaModel->getBeritaWithRelation(9999);
 
         return view('pages/admin/berita/list', $data);
     }
@@ -82,38 +98,11 @@ class Berita extends BaseController
 
     public function preview($id)
     {
-        $data['isLoggedIn'] = auth()->loggedIn();
+        $data['isLoggedIn'] = $this->isLoggedIn;
 
-        $data['tournaments'] = [
-          ["id" => 1, "name" => "League of Legends World Championship", "image" => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIe9oqSqALyMSr3kMBA4lJJlnOz4wJBpnKNw&s", "start_date" => "October 10, 2024"],
-          ["id" => 2, "name" => "Dota 2 The International", "image" => "https://www.blibli.com/friends-backend/wp-content/uploads/2023/12/B1100936-Cover-Juara-The-International-DOTA-2-1536x806.jpg", "start_date" => "August 15, 2024"],
-          ["id" => 3, "name" => "CS:GO Major Championship", "image" => "https://res.cloudinary.com/pley-gg/image/upload/c_fill,w_900/v1/teams/astralis/Copyright_-_Bart-Oerbekke_-_astralis4_rgezkp", "start_date" => "November 1, 2024"],
-        ];
+        $data['tournaments'] = $this->tournaments;
 
-        $data['popular_news'] = [
-          [
-            "id" => 1, 
-            "title" => "Mobile Legends Tournament 2024 Announced", 
-            "image" => "https://www.adobomagazine.com/wp-content/uploads/2024/01/Bang-Bang-Esports-unveils-2024-Roadmap-HERO.jpg", 
-            "description" => "The biggest Mobile Legends tournament is back with exciting new rules and huge prizes.", 
-            "category" => "Mobile Legends", 
-            "date_posted" => "September 1, 2024"
-          ],[
-            "id" => 2, 
-            "title" => "PUBG Mobile Pro League: New Champions Crowned", 
-            "image" => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzSYtXl4pUceAIG_-R-9F_eJ0DaJkWbjXChw&s", 
-            "description" => "The latest PUBG Mobile Pro League wrapped up with a thrilling finale as new champions emerge.", 
-            "category" => "PUBG Mobile", 
-            "date_posted" => "August 29, 2024"
-          ],[
-            "id" => 3, 
-            "title" => "eFootball 2024 Season Kickoff Update", 
-            "image" => "https://staticg.sportskeeda.com/editor/2024/04/da58a-17128455260023-1920.jpg?w=640", 
-            "description" => "Konami has released a major update to kickstart the new eFootball 2024 season.", 
-            "category" => "eFootball", 
-            "date_posted" => "August 15, 2024"
-          ],
-        ];
+        $data['popular_news'] = $this->popular_news;
 
         $data['categories'] = $this->kategoriModel->findAll();
 
@@ -136,6 +125,26 @@ class Berita extends BaseController
         $data['berita'] = $this->beritaModel->find($id);
 
         return view('pages/admin/berita/edit-news', $data);
+    }
+
+    public function show($slug)
+    {
+      $data['isLoggedIn'] = $this->isLoggedIn;
+      $data['tournaments'] = $this->tournaments;
+      $data['popular_news'] = $this->popular_news;
+      $data['categories'] = $this->kategoriModel->findAll();
+      $data['berita'] = $this->beritaModel
+                             ->select('berita.*, kategori.name as kategori_name, users.username as author_name')
+                             ->join('kategori', 'kategori.id = berita.kategori_id')
+                             ->join('users', 'users.id = berita.author_id')
+                             ->where('berita.slug', $slug)
+                             ->first();
+      $beritaId = $data['berita']['id'];                             
+      $data['isLiked'] = $this->isLoggedIn ? ($this->likeModel->where('userId', auth()->user()->id)->where('beritaId', $beritaId)->first() ? true : false) : false;
+      $data['likes'] = $this->likeModel->where('beritaId', $beritaId)->countAllResults();
+      $data['comments'] = $this->commentModel->select('comments.*, users.username as user_name')->join('users', 'users.id = comments.userId')->where('beritaId', $beritaId)->findAll();
+
+      return view('pages/berita/show', $data);
     }
     
     public function update($id)
@@ -196,5 +205,52 @@ class Berita extends BaseController
         } else {
             return redirect()->back()->with('error', 'Berita tidak ditemukan.');
         }
+    }
+
+    public function like($id)
+    {
+        if(!$this->isLoggedIn){
+          return redirect()->back()->with('error', 'Login untuk memberikan like.');
+        }
+
+        $userId = auth()->user()->id;
+        $data = [
+            'userId' => $userId,
+            'beritaId' => $id,
+        ];
+
+        $this->likeModel->insert($data);
+        return redirect()->back();
+    }
+
+    public function dislike($id)
+    {
+        if(!$this->isLoggedIn){
+          return redirect()->back()->with('error', 'Login untuk memberikan like.');
+        }
+
+        $userId = auth()->user()->id;
+
+        $this->likeModel->where('userId', $userId)->where('beritaId', $id)->delete();
+        return redirect()->back();
+    }
+
+    public function comment($id)
+    {
+        if(!$this->isLoggedIn){
+          return redirect()->back()->with('error', 'Login untuk memberikan komentar.');
+        }
+
+        $userId = auth()->user()->id;
+        $text = $this->request->getPost('text');
+
+        $data = [
+            'userId' => $userId,
+            'beritaId' => $id,
+            'text' => $text,
+        ];
+
+        $this->commentModel->insert($data);
+        return redirect()->back();
     }
 }
