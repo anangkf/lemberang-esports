@@ -16,9 +16,9 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
 $routes->patch('berita/(:num)/like', 'Berita::like/$1');
 $routes->delete('berita/(:num)/like', 'Berita::dislike/$1');
 $routes->post('berita/(:num)/comment', 'Berita::comment/$1');
-$routes->get('berita/(:num)', 'Berita::show/$1');
+$routes->get('berita/(:segment)', 'Berita::show/$1');
 $routes->get('berita/kategori/(:segment)', 'Berita::listByCategory/$1');
-$routes->get('berita/all', 'Berita::list/$1');
+// $routes->get('berita/all', 'Berita::list/$1');
 // $routes->get('/dashboard', 'Dashboard::index');
 
 service('auth')->routes($routes);

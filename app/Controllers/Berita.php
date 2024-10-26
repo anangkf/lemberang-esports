@@ -44,25 +44,9 @@ class Berita extends BaseController
         return view('pages/admin/berita/list', $data);
     }
 
-    public function list()
-    {
-        $data['user'] = auth()->user();
-        $data['roles'] = auth()->user()->getGroups();
-        $data['isLoggedIn'] = $this->isLoggedIn;
-        $data['tournaments'] = $this->tournaments;
-        $data['popular_news'] = $this->popular_news;
-        $data['categories'] = $this->kategoriModel->findAll();
-
-        $data['news'] = $this->beritaModel->getBeritaWithRelation(9999);
-
-        return view('pages/berita/list', $data);
-    }
-
     public function listByCategory($slug)
     {
         $kategori = $this->kategoriModel->where(['slug' => $slug])->first();
-        $data['user'] = auth()->user();
-        $data['roles'] = auth()->user()->getGroups();
         $data['isLoggedIn'] = $this->isLoggedIn;
         $data['tournaments'] = $this->tournaments;
         $data['popular_news'] = $this->popular_news;
@@ -163,6 +147,13 @@ class Berita extends BaseController
       $data['tournaments'] = $this->tournaments;
       $data['popular_news'] = $this->popular_news;
       $data['categories'] = $this->kategoriModel->findAll();
+      
+      if($slug == 'all'){
+        $data['news'] = $this->beritaModel->getBeritaWithRelation(9999);
+
+        return view('pages/berita/list', $data);
+      }
+
       $data['berita'] = $this->beritaModel
                              ->select('berita.*, kategori.name as kategori_name, users.username as author_name')
                              ->join('kategori', 'kategori.id = berita.kategori_id')
