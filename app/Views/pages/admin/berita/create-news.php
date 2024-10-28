@@ -127,7 +127,7 @@
             toolbar: [
                 'undo', 'redo', '|', 'heading', 'bold', 'italic', 'superscript', 'subscript', '|',
                 'alignment', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 
-                '|', 'bulletedList', 'numberedList', 'blockQuote' , 'link', 'insertImage', 'insertTable'
+                '|', 'bulletedList', 'numberedList', 'blockQuote' , 'link', /*'insertImage',*/ 'insertTable'
             ],
             heading: {
                 options: [

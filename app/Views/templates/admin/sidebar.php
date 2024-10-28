@@ -57,10 +57,10 @@
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item active">
-                            <a href="#" class="submenu-link">List Tournament</a>
+                            <a href="<?= base_url('admin/tournament') ?>" class="submenu-link">List Tournament</a>
                         </li>
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Tambah Tournament</a>
+                            <a href="<?= base_url('admin/tournament/new') ?>" class="submenu-link">Tambah Tournament</a>
                         </li>
                     </ul>
                 </li>
