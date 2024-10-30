@@ -14,6 +14,26 @@ class CommentModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = ['userId', 'beritaId', 'text'];
 
+    public function getNewsByMonth()
+    {
+        $currentDate = new \DateTime();
+
+        $newsCount = [];
+
+        // Loop through the last 6 months
+        for ($i = 0; $i < 6; $i++) {
+            $monthYear = $currentDate->format('Y-m');
+
+            $count = $this->where('DATE_FORMAT(created_at, "%Y-%m")', $monthYear)
+                ->countAllResults();
+
+            $newsCount[] = $count;
+            $currentDate->modify('-1 month');
+        }
+
+        return array_reverse($newsCount);
+    }
+
     // Dates
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';

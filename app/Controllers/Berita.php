@@ -7,28 +7,31 @@ use App\Models\BeritaModel;
 use App\Models\CommentModel;
 use App\Models\KategoriModel;
 use App\Models\LikeModel;
+use App\Models\TournamentModel;
 
 class Berita extends BaseController
 {
     protected $kategoriModel;
     protected $beritaModel;
+    protected $tournamentModel;
     private $isLoggedIn;
     private $popular_news;
     private $tournaments;
     private $likeModel;
     private $commentModel;
+    private $hideSidebar = false;
+
 
     public function __construct()
     {
         $this->beritaModel = new BeritaModel();
         $this->kategoriModel = new KategoriModel();
+        $this->tournamentModel = new TournamentModel();
+
         $this->isLoggedIn = auth()->loggedIn();
         $this->popular_news = $this->beritaModel->getBeritaPopularWithRelation(5);
-        $this->tournaments = [
-          ["id" => 1, "name" => "League of Legends World Championship", "image" => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIe9oqSqALyMSr3kMBA4lJJlnOz4wJBpnKNw&s", "start_date" => "October 10, 2024"],
-          ["id" => 2, "name" => "Dota 2 The International", "image" => "https://www.blibli.com/friends-backend/wp-content/uploads/2023/12/B1100936-Cover-Juara-The-International-DOTA-2-1536x806.jpg", "start_date" => "August 15, 2024"],
-          ["id" => 3, "name" => "CS:GO Major Championship", "image" => "https://res.cloudinary.com/pley-gg/image/upload/c_fill,w_900/v1/teams/astralis/Copyright_-_Bart-Oerbekke_-_astralis4_rgezkp", "start_date" => "November 1, 2024"],
-        ];
+        $this->tournaments = $this->tournamentModel->getTournamentWithRelation(5);
+
         $this->likeModel = new LikeModel();
         $this->commentModel = new CommentModel();
     }
@@ -52,6 +55,7 @@ class Berita extends BaseController
         $data['popular_news'] = $this->popular_news;
         $data['categories'] = $this->kategoriModel->findAll();
         $data['title'] = $kategori['name'];
+        $data['hideSidebar'] = $this->hideSidebar;
 
         $data['news'] = $this->beritaModel->getBeritaByCategory($kategori['id'], 9999);
 
@@ -59,7 +63,7 @@ class Berita extends BaseController
     }
 
     public function new()
-    {   
+    {
         $data['user'] = auth()->user();
         $data['roles'] = auth()->user()->getGroups();
         $data['title'] = 'Tambah Berita';
@@ -121,10 +125,10 @@ class Berita extends BaseController
         $data['categories'] = $this->kategoriModel->findAll();
 
         $data['berita'] = $this->beritaModel
-                               ->select('berita.*, users.username as author_name')
-                               ->join('users', 'users.id = berita.author_id')
-                               ->orderBy('created_at', 'DESC')
-                               ->find($id);
+            ->select('berita.*, users.username as author_name')
+            ->join('users', 'users.id = berita.author_id')
+            ->orderBy('created_at', 'DESC')
+            ->find($id);
 
         return view('pages/berita/preview', $data);
     }
@@ -143,31 +147,32 @@ class Berita extends BaseController
 
     public function show($slug)
     {
-      $data['isLoggedIn'] = $this->isLoggedIn;
-      $data['tournaments'] = $this->tournaments;
-      $data['popular_news'] = $this->popular_news;
-      $data['categories'] = $this->kategoriModel->findAll();
-      
-      if($slug == 'all'){
-        $data['news'] = $this->beritaModel->getBeritaWithRelation(9999);
+        $data['isLoggedIn'] = $this->isLoggedIn;
+        $data['tournaments'] = $this->tournaments;
+        $data['popular_news'] = $this->popular_news;
+        $data['categories'] = $this->kategoriModel->findAll();
+        $data['hideSidebar'] = $this->hideSidebar;
 
-        return view('pages/berita/list', $data);
-      }
+        if ($slug == 'all') {
+            $data['news'] = $this->beritaModel->getBeritaWithRelation(9999);
 
-      $data['berita'] = $this->beritaModel
-                             ->select('berita.*, kategori.name as kategori_name, users.username as author_name')
-                             ->join('kategori', 'kategori.id = berita.kategori_id')
-                             ->join('users', 'users.id = berita.author_id')
-                             ->where('berita.slug', $slug)
-                             ->first();
-      $beritaId = $data['berita']['id'];                             
-      $data['isLiked'] = $this->isLoggedIn ? ($this->likeModel->where('userId', auth()->user()->id)->where('beritaId', $beritaId)->first() ? true : false) : false;
-      $data['likes'] = $this->likeModel->where('beritaId', $beritaId)->countAllResults();
-      $data['comments'] = $this->commentModel->select('comments.*, users.username as user_name')->join('users', 'users.id = comments.userId')->where('beritaId', $beritaId)->findAll();
+            return view('pages/berita/list', $data);
+        }
 
-      return view('pages/berita/show', $data);
+        $data['berita'] = $this->beritaModel
+            ->select('berita.*, kategori.name as kategori_name, users.username as author_name')
+            ->join('kategori', 'kategori.id = berita.kategori_id')
+            ->join('users', 'users.id = berita.author_id')
+            ->where('berita.slug', $slug)
+            ->first();
+        $beritaId = $data['berita']['id'];
+        $data['isLiked'] = $this->isLoggedIn ? ($this->likeModel->where('userId', auth()->user()->id)->where('beritaId', $beritaId)->first() ? true : false) : false;
+        $data['likes'] = $this->likeModel->where('beritaId', $beritaId)->countAllResults();
+        $data['comments'] = $this->commentModel->select('comments.*, users.username as user_name')->join('users', 'users.id = comments.userId')->where('beritaId', $beritaId)->findAll();
+
+        return view('pages/berita/show', $data);
     }
-    
+
     public function update($id)
     {
         $rules = [
@@ -218,7 +223,7 @@ class Berita extends BaseController
                 //     // Hapus file gambar dari folder
                 //     unlink($pathImage);
                 // }
-                
+
                 return redirect()->to('/admin/berita')->with('success', 'Berita berhasil dihapus.');
             } else {
                 return redirect()->back()->with('error', 'Gagal menghapus berita. Silakan coba lagi.');
@@ -230,8 +235,8 @@ class Berita extends BaseController
 
     public function like($id)
     {
-        if(!$this->isLoggedIn){
-          return redirect()->back()->with('error', 'Login untuk memberikan like.');
+        if (!$this->isLoggedIn) {
+            return redirect()->back()->with('error', 'Login untuk memberikan like.');
         }
 
         $userId = auth()->user()->id;
@@ -246,8 +251,8 @@ class Berita extends BaseController
 
     public function dislike($id)
     {
-        if(!$this->isLoggedIn){
-          return redirect()->back()->with('error', 'Login untuk memberikan like.');
+        if (!$this->isLoggedIn) {
+            return redirect()->back()->with('error', 'Login untuk memberikan like.');
         }
 
         $userId = auth()->user()->id;
@@ -258,8 +263,8 @@ class Berita extends BaseController
 
     public function comment($id)
     {
-        if(!$this->isLoggedIn){
-          return redirect()->back()->with('error', 'Login untuk memberikan komentar.');
+        if (!$this->isLoggedIn) {
+            return redirect()->back()->with('error', 'Login untuk memberikan komentar.');
         }
 
         $userId = auth()->user()->id;

@@ -19,6 +19,7 @@ $routes->delete('berita/(:num)/like', 'Berita::dislike/$1');
 $routes->post('berita/(:num)/comment', 'Berita::comment/$1');
 $routes->get('berita/(:segment)', 'Berita::show/$1');
 $routes->get('berita/kategori/(:segment)', 'Berita::listByCategory/$1');
+$routes->get('tournament/(:segment)', 'Tournament::show/$1');
 // $routes->get('berita/all', 'Berita::list/$1');
 // $routes->get('/dashboard', 'Dashboard::index');
 

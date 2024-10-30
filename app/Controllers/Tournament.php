@@ -16,13 +16,13 @@ class Tournament extends BaseController
     }
     public function index()
     {
-      $data['user'] = auth()->user();
-      $data['roles'] = auth()->user()->getGroups();
-      $data['title'] = 'List Tournament';
+        $data['user'] = auth()->user();
+        $data['roles'] = auth()->user()->getGroups();
+        $data['title'] = 'List Tournament';
 
-      $data['tournaments'] = $this->tournamentModel->getTournamentWithRelation(9999);
+        $data['tournaments'] = $this->tournamentModel->getTournamentWithRelation(9999);
 
-      return view('pages/admin/tournament/list', $data);
+        return view('pages/admin/tournament/list', $data);
     }
 
     public function new()
@@ -80,6 +80,20 @@ class Tournament extends BaseController
         } else {
             return redirect()->back()->withInput()->with('error', 'Gagal menambahkan tournament. Silakan coba lagi.');
         }
+    }
+
+    public function show($id)
+    {
+        $data['isLoggedIn'] = auth()->loggedIn();
+        $data['title'] = 'Detail Tournament';
+        $data['tournament'] = $this->tournamentModel
+            ->select('tournaments.*, kategori.name as kategori_name')
+            ->join('kategori', 'kategori.id = tournaments.kategori_id')
+            ->find($id);
+        $data['categories'] = $this->kategoriModel->findAll();
+        $data['hideSidebar'] = true;
+
+        return view('pages/tournament', $data);
     }
 
     public function edit($id)

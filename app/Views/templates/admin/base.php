@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gensart | Dashboard</title>
+    <title>Lemberang Esports</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/app.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/app-dark.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/iconly.css'); ?>">
@@ -26,12 +26,12 @@
             <?= $this->include('templates/admin/header'); ?>
 
             <?php if (session('error') !== null) : ?>
-                <div class="position-absolute alert alert-danger alert-dismissible fade show"" role="alert" style="right: 12px;">
-                  <?= session('error') ?>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="position-absolute alert alert-danger alert-dismissible fade show"" role=" alert" style="right: 12px;">
+                    <?= session('error') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php elseif (session('errors') !== null) : ?>
-                <div class="position-absolute alert alert-danger alert-dismissible fade show"" role="alert" style="right: 12px;">
+                <div class="position-absolute alert alert-danger alert-dismissible fade show"" role=" alert" style="right: 12px;">
                     <?php if (is_array(session('errors'))) : ?>
                         <?php foreach (session('errors') as $error) : ?>
                             <?= $error ?>
@@ -46,10 +46,10 @@
             <?php endif ?>
 
             <?php if (session('message') !== null) : ?>
-              <div class="position-absolute alert alert-success alert-dismissible fade show"" role="alert" style="right: 12px;">
-                <?= session('message') ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+                <div class="position-absolute alert alert-success alert-dismissible fade show"" role=" alert" style="right: 12px;">
+                    <?= session('message') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             <?php endif ?>
 
             <div class="page-content">
@@ -69,6 +69,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!-- load chartjs script from cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <?= $this->renderSection('page-script'); ?>
 </body>

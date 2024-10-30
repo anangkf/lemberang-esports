@@ -17,7 +17,7 @@
                     </h6>
                     <p class="text-center">(<?= array_values($roles)[0]; ?>)</p>
                 </h6>
-                <div class="dropdown-item d-flex align-items-center justify-content-between mt-2" for="toggle-dark">
+                <!-- <div class="dropdown-item d-flex align-items-center justify-content-between mt-2" for="toggle-dark">
                     <span>Tema</span>
                     <div class="theme-toggle d-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -39,7 +39,7 @@
                             </path>
                         </svg>
                     </div>
-                </div>
+                </div> -->
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item align-self-center" href="#">
                     <i class="bi bi-person-circle me-2"></i> Profil Anda
