@@ -130,6 +130,8 @@ class Berita extends BaseController
             ->orderBy('created_at', 'DESC')
             ->find($id);
 
+        $data['hideSidebar'] = false;
+
         return view('pages/berita/preview', $data);
     }
 

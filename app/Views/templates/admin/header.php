@@ -7,8 +7,9 @@
         </header>
         <h3 class="text-center"><?= $title ?></h3>
         <div class="dropdown">
-            <span class="text-end me-3 d-none d-xl-inline"><?= $user->email; ?></span>
-            <img src="https://picsum.photos/200" data-bs-toggle="dropdown" class="dropdown-toggle img-fluid rounded-circle" style="cursor:pointer;" width="50" alt="image" data-bs-auto-close="outside">
+            <span class="me-3 d-none d-xl-inline"><?= $user->email; ?></span>
+            <i class="bi bi-person-circle fs-2" data-bs-toggle="dropdown" class="dropdown-toggle img-fluid rounded-circle" style="cursor:pointer;" width="50" alt="image" data-bs-auto-close="outside"></i>
+            <!-- <img src="https://picsum.photos/200" data-bs-toggle="dropdown" class="dropdown-toggle img-fluid rounded-circle" style="cursor:pointer;" width="50" alt="image" data-bs-auto-close="outside"> -->
             <div class="dropdown-menu mt-2">
                 <h6 class="dropdown-header text-center">
                     <div>Selamat Datang,</div>
@@ -41,9 +42,9 @@
                     </div>
                 </div> -->
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item align-self-center" href="#">
+                <!-- <a class="dropdown-item align-self-center" href="#">
                     <i class="bi bi-person-circle me-2"></i> Profil Anda
-                </a>
+                </a> -->
                 <a class="dropdown-item align-self-center" href="/logout">
                     <i class="bi bi-box-arrow-right me-2"></i> Logout
                 </a>

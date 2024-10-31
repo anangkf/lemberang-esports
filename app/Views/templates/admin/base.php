@@ -21,7 +21,7 @@
 
 <body>
     <div id="app">
-        <?= $this->include('templates/admin/sidebar'); ?>
+        <?= view_cell('SidebarCell') ?>
         <div id="main">
             <?= $this->include('templates/admin/header'); ?>
 
