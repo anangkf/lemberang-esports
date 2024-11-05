@@ -98,10 +98,13 @@ class Berita extends BaseController
         ];
 
         $picture = $this->request->getFile('picture');
+        $uploadPath = (ENVIRONMENT === 'production') 
+            ? ROOTPATH . '/../public_html/uploads' 
+            : ROOTPATH . 'public/uploads';
 
         if ($picture->isValid() && !$picture->hasMoved()) {
             $newName = $picture->getRandomName();
-            $picture->move(ROOTPATH . 'public/uploads', $newName);
+            $picture->move($uploadPath, $newName);
 
             $data['picture'] = $newName;
         }
