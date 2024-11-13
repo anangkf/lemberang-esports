@@ -138,6 +138,9 @@ class Tournament extends BaseController
             'prize' => $this->request->getPost('prize'),
             'rules' => $this->request->getPost('rules'),
             'organizer' => $this->request->getPost('organizer'),
+            'cp' => $this->request->getPost('cp'),
+            'link' => $this->request->getPost('link'),
+            'champions' => $this->request->getPost('champions'),
         ];
 
         $picture = $this->request->getFile('picture');

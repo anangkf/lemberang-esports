@@ -94,6 +94,18 @@
           <label for="organizer">Penyelenggara</label>
           <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Penyelenggara" value="<?= $tournament['organizer'] ?>" required>
       </div>
+      <div class="form-group">
+          <label for="cp">Contact Person</label>
+          <input type="text" class="form-control" id="cp" name="cp" placeholder="Contact Person" value="<?= $tournament['cp'] ?>">
+      </div>
+      <div class="form-group">
+          <label for="link">Link</label>
+          <input type="text" class="form-control" id="link" name="link" placeholder="Link" value="<?= $tournament['link'] ?>">
+      </div>
+      <div class="form-group">
+          <label for="rules">Juara</label>
+          <textarea class="form-control" id="champions" name="champions" placeholder="Juara" rows="4"><?= $tournament['champions'] ?></textarea>
+      </div>
       <a href="<?= base_url('admin/tournament') ?>" class="btn btn-secondary shadow-sm">Batal</a>
       <button type="submit" class="btn btn-primary shadow-sm">Simpan</button>
     </form>

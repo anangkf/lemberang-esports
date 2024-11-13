@@ -94,6 +94,14 @@
             <label for="organizer">Penyelenggara</label>
             <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Penyelenggara" required>
         </div>
+        <div class="form-group">
+            <label for="cp">Contact Person</label>
+            <input type="text" class="form-control" id="cp" name="cp" placeholder="Contact Person">
+        </div>
+        <div class="form-group">
+            <label for="link">Link</label>
+            <input type="text" class="form-control" id="link" name="link" placeholder="Link">
+        </div>
         <a href="<?= base_url('admin/tournament') ?>" class="btn btn-secondary shadow-sm">Batal</a>
         <button type="submit" class="btn btn-primary shadow-sm">Simpan</button>
       </form>

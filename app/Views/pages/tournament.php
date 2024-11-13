@@ -16,6 +16,11 @@
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="rules-tab" data-bs-toggle="tab" href="#rules" role="tab" aria-controls="rules" aria-selected="false">Rules</a>
             </li>
+            <?php if ($tournament['champions']): ?>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="champions-tab" data-bs-toggle="tab" href="#champions" role="tab" aria-controls="champions" aria-selected="false">Juara</a>
+                </li>
+            <?php endif; ?>
         </ul>
 
         <div class="tab-content" id="dataTabContent">
@@ -30,6 +35,8 @@
                     <p class="text-muted">Slot: <?= $tournament['slot'] ?></p>
                     <p class="text-muted">Lokasi: <?= $tournament['location'] ?></p>
                     <p class="text-muted">Penyelenggara: <?= $tournament['organizer'] ?></p>
+                    <p class="text-muted">Contact Person: <?= $tournament['cp'] ?? '-' ?></p>
+                    <p class="text-muted">Link: <?= $tournament['link'] ?? '-' ?></p>
                 </div>
             </div>
             <div class="tab-pane fade" id="prize" role="tabpanel" aria-labelledby="prize-tab">
@@ -40,6 +47,11 @@
             <div class="tab-pane fade" id="rules" role="tabpanel" aria-labelledby="rules-tab">
                 <div class="row mt-3">
                     <p class="w-100" style="white-space: pre-wrap;"><?= $tournament['rules'] ?></p>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="champions" role="tabpanel" aria-labelledby="champions-tab">
+                <div class="row mt-3">
+                    <p class="w-100" style="white-space: pre-wrap;"><?= $tournament['champions'] ?></p>
                 </div>
             </div>
         </div>

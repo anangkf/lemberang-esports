@@ -12,7 +12,7 @@ class TournamentModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name', 'kategori_id', 'registerDates', 'eventDates', 'picture', 'description', 'htm', 'slot', 'location', 'prize', 'rules', 'organizer'];
+    protected $allowedFields    = ['name', 'kategori_id', 'registerDates', 'eventDates', 'picture', 'description', 'htm', 'slot', 'location', 'prize', 'rules', 'organizer', 'cp', 'link', 'champions'];
 
     public function getTournamentWithRelation($limit = 3)
     {
