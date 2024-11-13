@@ -2,10 +2,17 @@
   <div class="grid">
     <h5>Info Tournament</h5>
     <div class="row gap-lg-2">
-      <?php foreach ($tournaments as $tournament): ?>
-        <?= view_cell('TournamentItemCell', ['tournament' => $tournament]) ?>
-      <?php endforeach; ?>
+      <?php if(count($tournaments)): ?>
+        <?php foreach ($tournaments as $tournament): ?>
+          <?= view_cell('TournamentItemCell', ['tournament' => $tournament]) ?>
+        <?php endforeach; ?>
+      <?php else: ?>
+      <div class="col-12">
+        <p>Tidak ada tournament yang aktif.</p>
+      </div>
     </div>
+    <?php endif; ?>
+
   </div>
 
   <div class="grid">

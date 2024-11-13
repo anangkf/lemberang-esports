@@ -16,8 +16,11 @@ class TournamentModel extends Model
 
     public function getTournamentWithRelation($limit = 3)
     {
+        $currentDate = date('Y-m-d');
+
         return $this->select('tournaments.*, kategori.name as kategori_name')
                     ->join('kategori', 'kategori.id = tournaments.kategori_id')
+                    ->where("STR_TO_DATE(SUBSTRING_INDEX(tournaments.registerDates, ' - ', -1), '%m/%d/%Y') >= ", $currentDate)
                     ->orderBy('created_at', 'DESC')
                     ->findAll($limit);
     }
